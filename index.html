@@ -2597,8 +2597,16 @@
             <h3>Email Academy</h3>
             <p>For formal enrollments & correspondence:</p>
             <p style="margin-top: 8px;">
-              <a href="mailto:helloalbayanacademy@gmail.com">helloalbayanacademy@gmail.com</a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=helloalbayanacademy@gmail.com&su=Inquiry+-+Al-Bayan+Academy" target="_blank" rel="noopener" style="color:var(--green-800); font-weight:700; text-decoration:underline;">helloalbayanacademy@gmail.com</a>
             </p>
+            <div style="margin-top: 14px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=helloalbayanacademy@gmail.com&su=Inquiry+-+Al-Bayan+Academy" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="padding: 6px 14px; font-size: 12px;">
+                Open in Gmail ↗
+              </a>
+              <button type="button" onclick="copyEmailToClipboard(this)" class="btn btn-outline btn-sm" style="padding: 6px 14px; font-size: 12px; cursor: pointer;">
+                Copy Email 📋
+              </button>
+            </div>
           </div>
 
           <div class="contact-card">
@@ -2663,7 +2671,7 @@
           <ul class="footer-links">
             <li>WhatsApp: +234 816 129 0687</li>
             <li>Mobile: +234 913 243 6765</li>
-            <li>Email: helloalbayanacademy@gmail.com</li>
+            <li>Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=helloalbayanacademy@gmail.com&su=Inquiry+-+Al-Bayan+Academy" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">helloalbayanacademy@gmail.com</a></li>
             <li>Admissions: 2026–2027 Open</li>
           </ul>
         </div>
@@ -2855,13 +2863,41 @@
       }
     }
 
+    // Copy Email Utility
+    function copyEmailToClipboard(btn) {
+      const email = 'helloalbayanacademy@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Copied! ✓';
+        btn.style.borderColor = 'var(--green-700)';
+        btn.style.color = 'var(--green-700)';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2500);
+      }).catch(() => {
+        window.location.href = 'mailto:' + email;
+      });
+    }
+
     // Modal Control
-    function showModal(waUrl) {
+    function showModal(waUrl, emailDelivered = false) {
       const modal = document.getElementById('successModal');
       const modalWaBtn = document.getElementById('modalWaBtn');
+      const modalMsg = document.getElementById('modalMsg');
+      const advisor = getActiveAdvisor();
+
+      if (emailDelivered) {
+        modalMsg.innerHTML = `Your application has been delivered directly to <strong>helloalbayanacademy@gmail.com</strong>!<br><br>Your designated Academic Advisor is <strong>${advisor.display}</strong>. Tap below to connect with your advisor on WhatsApp immediately for fast-track scheduling.`;
+      } else {
+        modalMsg.innerHTML = `Thank you for choosing Al-Bayan Academy! Your designated Academic Advisor is <strong>${advisor.display}</strong>.<br><br>Tap below to connect with your advisor directly on WhatsApp.`;
+      }
+
       if (waUrl) {
         modalWaBtn.href = waUrl;
         modalWaBtn.style.display = 'inline-flex';
+        modalWaBtn.innerHTML = `<span>Connect with ${advisor.display} on WhatsApp</span>`;
       } else {
         modalWaBtn.style.display = 'none';
       }
@@ -2873,26 +2909,26 @@
     }
 
     // =========================================================================
-    // ACADEMIC ADVISOR WHATSAPP LOAD BALANCER & ROTATION SYSTEM
+    // ACADEMIC ADVISOR WHATSAPP LOAD BALANCER & CONSISTENCY SYSTEM
     // =========================================================================
-    // Choose your distribution mode:
-    //  - 'round_robin' (Default): Alternates client-by-client:
-    //      Client 1 -> Advisor 1 (+234 816 129 0687)
-    //      Client 2 -> Advisor 2 (+234 913 243 6765)
-    //      Client 3 -> Advisor 1, Client 4 -> Advisor 2, and so on.
-    //  - 'weekly': Alternates week-by-week:
-    //      Week 1 (odd week of year)  -> Advisor 1 (+234 816 129 0687)
-    //      Week 2 (even week of year) -> Advisor 2 (+234 913 243 6765)
+    // 'round_robin' Mode:
+    //  - Client 1 -> Advisor 1 (+234 816 129 0687)
+    //  - Client 2 -> Advisor 2 (+234 913 243 6765)
+    //  - Client 3 -> Advisor 1, Client 4 -> Advisor 2, and so on.
+    //  - Consistency Guarantee: Each client is permanently locked to their assigned
+    //    advisor in their device browser so they never get bounced between advisors.
     const ADVISOR_ROTATION_MODE = 'round_robin';
 
     const ADVISORS = [
       {
         id: 1,
+        name: 'Advisor 1',
         phone: '2348161290687',
         display: '+234 816 129 0687'
       },
       {
         id: 2,
+        name: 'Advisor 2',
         phone: '2349132436765',
         display: '+234 913 243 6765'
       }
@@ -2909,28 +2945,31 @@
     function getActiveAdvisor() {
       if (ADVISOR_ROTATION_MODE === 'weekly') {
         const currentWeek = getWeekNumber(new Date());
-        // Odd calendar week -> Advisor 1, Even calendar week -> Advisor 2
         const advisorIndex = currentWeek % 2 === 1 ? 0 : 1;
         return ADVISORS[advisorIndex];
       }
 
-      // 'round_robin' (Client Alternator):
-      // Keep assigned advisor consistent for the current user's session
+      // 'round_robin' with Permanent Client Consistency
       try {
-        const sessionAdvisorIndex = sessionStorage.getItem('albayan_assigned_advisor');
-        if (sessionAdvisorIndex !== null && ADVISORS[sessionAdvisorIndex]) {
-          return ADVISORS[sessionAdvisorIndex];
+        // 1. If this client has already been assigned an advisor on this device, ALWAYS return that advisor
+        const persistentIndex = localStorage.getItem('albayan_persistent_advisor_id');
+        if (persistentIndex !== null && ADVISORS[persistentIndex]) {
+          return ADVISORS[persistentIndex];
         }
 
-        let clientCounter = parseInt(localStorage.getItem('albayan_client_counter') || '0', 10);
-        const assignedIndex = clientCounter % 2; // 0 for client 1, 1 for client 2, 0 for client 3...
+        // 2. New client: Alternate sequence 50/50
+        let clientCount = parseInt(localStorage.getItem('albayan_client_sequence') || '0', 10);
+        let assignedIndex = clientCount % 2;
+        if (clientCount === 0) {
+          assignedIndex = Date.now() % 2;
+        }
 
-        localStorage.setItem('albayan_client_counter', (clientCounter + 1).toString());
-        sessionStorage.setItem('albayan_assigned_advisor', assignedIndex.toString());
+        // Lock this client permanently to their assigned advisor
+        localStorage.setItem('albayan_client_sequence', (clientCount + 1).toString());
+        localStorage.setItem('albayan_persistent_advisor_id', assignedIndex.toString());
         return ADVISORS[assignedIndex];
       } catch (e) {
-        // Safe fallback in restricted environments
-        return ADVISORS[Math.random() < 0.5 ? 0 : 1];
+        return ADVISORS[0];
       }
     }
 
@@ -2971,8 +3010,9 @@
       const timezone = document.getElementById('timezone').value.trim() || 'Not specified';
       const notes = document.getElementById('message').value.trim();
 
+      const advisor = getActiveAdvisor();
       const messageText = 
-`Salam Alaykum Al-Bayan Academy!
+`Salam Alaykum ${advisor.display} (Al-Bayan Academy)!
 I would like to apply for the Free Assessment Class:
 
 • Student Name: ${studentName}
@@ -2986,7 +3026,6 @@ ${notes ? `• Additional Notes: ${notes}` : ''}
 
 Looking forward to your guidance!`;
 
-      const advisor = getActiveAdvisor();
       return `https://wa.me/${advisor.phone}?text=${encodeURIComponent(messageText)}`;
     }
 
@@ -3002,14 +3041,61 @@ Looking forward to your guidance!`;
 
       const waUrl = generateWhatsAppUrl();
       window.open(waUrl, '_blank');
-      showModal(waUrl);
+      showModal(waUrl, false);
     }
 
-    function handleFormSubmit(e) {
+    // Direct Form Submission via FormSubmit AJAX to helloalbayanacademy@gmail.com
+    async function handleFormSubmit(e) {
       e.preventDefault();
-      const waUrl = generateWhatsAppUrl();
-      showModal(waUrl);
-      document.getElementById('admissionForm').reset();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Delivering Application...</span>';
+
+      const advisor = getActiveAdvisor();
+      const studentName = document.getElementById('studentName').value.trim() || 'Prospective Student';
+      const parentName = document.getElementById('parentName').value.trim() || 'Not specified';
+      const discipline = document.getElementById('selectedDiscipline').value;
+      const ageGroup = document.getElementById('ageGroup').value;
+      const classFormat = document.getElementById('classFormat').value;
+      const phone = document.getElementById('phone').value.trim();
+      const timezone = document.getElementById('timezone').value.trim() || 'Not specified';
+      const notes = document.getElementById('message').value.trim() || 'None';
+
+      const formData = {
+        _subject: `New Student Application: ${studentName} (${discipline})`,
+        _template: 'table',
+        _captcha: 'false',
+        'Student Full Name': studentName,
+        'Parent / Guardian': parentName,
+        'Discipline Track': discipline,
+        'Age Group': ageGroup,
+        'Class Format': classFormat,
+        'WhatsApp Phone': phone,
+        'Country & Timezone': timezone,
+        'Assigned Advisor': `${advisor.name} (${advisor.display})`,
+        'Notes & Preferences': notes
+      };
+
+      try {
+        await fetch('https://formsubmit.co/ajax/helloalbayanacademy@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        const waUrl = generateWhatsAppUrl();
+        showModal(waUrl, true);
+        document.getElementById('admissionForm').reset();
+      } catch (err) {
+        const waUrl = generateWhatsAppUrl();
+        showModal(waUrl, false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     }
   </script>
 </body>
