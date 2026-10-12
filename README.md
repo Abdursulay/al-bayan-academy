@@ -51,5 +51,5 @@ start index.html
 ## 📞 Academy Contacts
 
 - **WhatsApp & Phone:** +234 816 129 0687 | +234 913 243 6765
-- **Email:** hello@albayanaacademy.com
+- **Email:** helloalbayanacademy@gmail.com
 - **Admissions:** 2026–2027 Academic Year Open
