@@ -333,17 +333,46 @@
     /* Mobile Hamburger */
     .menu-toggle {
       display: none;
-      background: none;
-      border: none;
       cursor: pointer;
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      padding: 0 14px;
+      height: 42px;
+      border-radius: 10px;
       background: var(--cream-soft);
+      border: 2px solid var(--gold-500);
       color: var(--green-950);
-      display: none;
-      place-items: center;
-      font-size: 20px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(203, 159, 63, 0.25);
+      animation: menuPulse 2.4s infinite ease-in-out;
+      transition: var(--transition);
+      align-items: center;
+      gap: 7px;
+    }
+    .menu-toggle:hover, .menu-toggle:focus {
+      background: #ffffff;
+      border-color: var(--gold-600);
+      transform: scale(1.04);
+      outline: none;
+    }
+    .menu-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--green-950);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      fill: none;
+    }
+    @keyframes menuPulse {
+      0%, 100% {
+        border-color: var(--gold-500);
+        box-shadow: 0 0 0 0 rgba(203, 159, 63, 0.45);
+      }
+      50% {
+        border-color: var(--green-800);
+        box-shadow: 0 0 0 5px rgba(20, 99, 84, 0.2);
+      }
     }
 
     /* Mobile Drawer */
@@ -1803,7 +1832,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .assessment-grid { grid-template-columns: 1fr; }
       .nav-menu { display: none; }
-      .menu-toggle { display: grid; }
+      .menu-toggle { display: inline-flex; }
     }
 
     @media (max-width: 860px) {
@@ -1888,7 +1917,10 @@
       <div class="nav-actions">
         <a class="btn btn-outline btn-sm" href="#assessment">Assessment</a>
         <a class="btn btn-gold btn-sm" href="#apply">Apply Now</a>
-        <button class="menu-toggle" id="menuToggleBtn" aria-label="Toggle Navigation Drawer">☰</button>
+        <button class="menu-toggle" id="menuToggleBtn" aria-label="Open Navigation Menu">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <span>Menu</span>
+        </button>
       </div>
     </div>
   </header>
