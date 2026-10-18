@@ -334,31 +334,28 @@
     .menu-toggle {
       display: none;
       cursor: pointer;
-      padding: 0 14px;
-      height: 42px;
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       background: var(--cream-soft);
       border: 2px solid var(--gold-500);
       color: var(--green-950);
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
       box-shadow: 0 2px 8px rgba(203, 159, 63, 0.25);
       animation: menuPulse 2.4s infinite ease-in-out;
       transition: var(--transition);
+      justify-content: center;
       align-items: center;
-      gap: 7px;
+      padding: 0;
     }
     .menu-toggle:hover, .menu-toggle:focus {
       background: #ffffff;
       border-color: var(--gold-600);
-      transform: scale(1.04);
+      transform: scale(1.05);
       outline: none;
     }
     .menu-toggle svg {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       stroke: var(--green-950);
       stroke-width: 2.2;
       stroke-linecap: round;
@@ -1919,7 +1916,6 @@
         <a class="btn btn-gold btn-sm" href="#apply">Apply Now</a>
         <button class="menu-toggle" id="menuToggleBtn" aria-label="Open Navigation Menu">
           <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span>Menu</span>
         </button>
       </div>
     </div>
