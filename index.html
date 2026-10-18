@@ -1196,7 +1196,63 @@
     .plan-subtitle {
       font-size: 13px;
       color: var(--ink-muted);
-      margin-bottom: 20px;
+      margin-bottom: 14px;
+    }
+    .plan-tuition-box {
+      background: linear-gradient(135deg, rgba(203, 159, 63, 0.12) 0%, rgba(20, 99, 84, 0.08) 100%);
+      border: 1px solid rgba(203, 159, 63, 0.35);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .plan-tuition-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold-800);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .plan-tuition-rates {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .plan-rate-pill {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-950);
+      background: #ffffff;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(7, 46, 39, 0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .plan-rate-pill strong {
+      color: var(--green-800);
+      font-size: 14px;
+    }
+    .plan-rate-note {
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+    .btn-telegram {
+      background: #229ED9;
+      color: var(--white);
+      box-shadow: 0 8px 20px rgba(34, 158, 217, 0.3);
+    }
+    .btn-telegram:hover {
+      background: #1b87ba;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(34, 158, 217, 0.4);
     }
     .plan-frequency {
       display: flex;
@@ -1552,7 +1608,7 @@
     }
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 24px;
     }
     .contact-card {
@@ -2257,6 +2313,16 @@
             <div>
               <h3 class="plan-title">Foundation</h3>
               <p class="plan-subtitle">Perfect for school-age beginners building a steady routine.</p>
+              
+              <div class="plan-tuition-box">
+                <span class="plan-tuition-tag">💎 Transparent Tuition Rate</span>
+                <div class="plan-tuition-rates">
+                  <span class="plan-rate-pill">Global: <strong>$1</strong> / hour</span>
+                  <span class="plan-rate-pill">Nigeria: <strong>₦1,331</strong> / hour</span>
+                </div>
+                <span class="plan-rate-note">Approx. $8 / ₦10,648 monthly (8 one-on-one hours)</span>
+              </div>
+
               <div class="plan-frequency">
                 <span class="plan-freq-val">2</span>
                 <span class="plan-freq-unit">Classes / Week (8 Monthly)</span>
@@ -2289,6 +2355,16 @@
             <div>
               <h3 class="plan-title">Accelerated Growth</h3>
               <p class="plan-subtitle">The recommended rhythm for fastest retention and natural fluency.</p>
+              
+              <div class="plan-tuition-box">
+                <span class="plan-tuition-tag">💎 Transparent Tuition Rate</span>
+                <div class="plan-tuition-rates">
+                  <span class="plan-rate-pill">Global: <strong>$1</strong> / hour</span>
+                  <span class="plan-rate-pill">Nigeria: <strong>₦1,331</strong> / hour</span>
+                </div>
+                <span class="plan-rate-note">Approx. $12 / ₦15,972 monthly (12 one-on-one hours)</span>
+              </div>
+
               <div class="plan-frequency">
                 <span class="plan-freq-val">3</span>
                 <span class="plan-freq-unit">Classes / Week (12 Monthly)</span>
@@ -2324,6 +2400,16 @@
             <div>
               <h3 class="plan-title">Intensive Hifz</h3>
               <p class="plan-subtitle">For committed memorizers and students aiming for rapid completion.</p>
+              
+              <div class="plan-tuition-box">
+                <span class="plan-tuition-tag">💎 Transparent Tuition Rate</span>
+                <div class="plan-tuition-rates">
+                  <span class="plan-rate-pill">Global: <strong>$1</strong> / hour</span>
+                  <span class="plan-rate-pill">Nigeria: <strong>₦1,331</strong> / hour</span>
+                </div>
+                <span class="plan-rate-note">Approx. $20 / ₦26,620 monthly (20 one-on-one hours)</span>
+              </div>
+
               <div class="plan-frequency">
                 <span class="plan-freq-val">5</span>
                 <span class="plan-freq-unit">Classes / Week (20 Monthly)</span>
@@ -2628,6 +2714,21 @@
           </div>
 
           <div class="contact-card">
+            <div class="contact-icon-bubble" style="background:rgba(34, 158, 217, 0.15); color:#229ED9;">✈</div>
+            <h3>Telegram Support</h3>
+            <p>Direct chat for users without WhatsApp:</p>
+            <p style="margin-top: 8px;">
+              <a href="https://t.me/+2349068922408" target="_blank" rel="noopener" style="color:#1b87ba;">+234 906 892 2408</a><br>
+              <span style="font-size:12px; color:var(--ink-muted);">(09068922408)</span>
+            </p>
+            <div style="margin-top: 14px;">
+              <a href="https://t.me/+2349068922408" target="_blank" rel="noopener" class="btn btn-telegram btn-sm" style="padding: 6px 14px; font-size: 12px; display:inline-flex;">
+                Chat on Telegram ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-card">
             <div class="contact-icon-bubble">🌐</div>
             <h3>Virtual Campus</h3>
             <p>100% Online Madrasa</p>
@@ -2721,6 +2822,9 @@
       <div style="display:flex; flex-direction:column; gap:10px;">
         <a class="btn btn-whatsapp" id="modalWaBtn" href="#" target="_blank" rel="noopener">
           Chat Directly on WhatsApp Now
+        </a>
+        <a class="btn btn-telegram" id="modalTgBtn" href="https://t.me/+2349068922408" target="_blank" rel="noopener">
+          Chat on Telegram (+234 906 892 2408)
         </a>
         <button class="btn btn-outline" onclick="closeModal()">Close Window</button>
       </div>
@@ -2899,17 +3003,24 @@
       });
     }
 
+    const TELEGRAM_ADVISOR = {
+      phone: '2349068922408',
+      display: '+234 906 892 2408',
+      url: 'https://t.me/+2349068922408'
+    };
+
     // Modal Control
     function showModal(waUrl, emailDelivered = false) {
       const modal = document.getElementById('successModal');
       const modalWaBtn = document.getElementById('modalWaBtn');
+      const modalTgBtn = document.getElementById('modalTgBtn');
       const modalMsg = document.getElementById('modalMsg');
       const advisor = getActiveAdvisor();
 
       if (emailDelivered) {
-        modalMsg.innerHTML = `Your application has been delivered directly to <strong>helloalbayanacademy@gmail.com</strong>!<br><br>Your designated Academic Advisor is <strong>${advisor.display}</strong>. Tap below to connect with your advisor on WhatsApp immediately for fast-track scheduling.`;
+        modalMsg.innerHTML = `Your application has been delivered directly to <strong>helloalbayanacademy@gmail.com</strong>!<br><br>Your designated Academic Advisor is <strong>${advisor.display}</strong>.<br>Connect via WhatsApp or Telegram below for immediate confirmation.`;
       } else {
-        modalMsg.innerHTML = `Thank you for choosing Al-Bayan Academy! Your designated Academic Advisor is <strong>${advisor.display}</strong>.<br><br>Tap below to connect with your advisor directly on WhatsApp.`;
+        modalMsg.innerHTML = `Thank you for choosing Al-Bayan Academy! Your designated Academic Advisor is <strong>${advisor.display}</strong>.<br><br>Connect via WhatsApp, or via Telegram if you do not use WhatsApp.`;
       }
 
       if (waUrl) {
@@ -2919,6 +3030,12 @@
       } else {
         modalWaBtn.style.display = 'none';
       }
+
+      if (modalTgBtn) {
+        modalTgBtn.href = TELEGRAM_ADVISOR.url;
+        modalTgBtn.innerHTML = `<span>Chat on Telegram (${TELEGRAM_ADVISOR.display})</span>`;
+      }
+
       modal.classList.add('active');
     }
 
@@ -3058,7 +3175,30 @@ Looking forward to your guidance!`;
       }
 
       const waUrl = generateWhatsAppUrl();
-      window.open(waUrl, '_blank');
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Attempt deep link into native WhatsApp application
+        let appOpened = false;
+        const blurHandler = () => { appOpened = true; };
+        window.addEventListener('blur', blurHandler, { once: true });
+
+        // Fallback: If device has no WhatsApp installed, the app won't open and page remains active
+        const fallbackTimer = setTimeout(() => {
+          window.removeEventListener('blur', blurHandler);
+          if (!appOpened && !document.hidden) {
+            // User has no native WhatsApp — auto-redirect directly to Telegram on 09068922408
+            window.location.href = TELEGRAM_ADVISOR.url;
+          }
+        }, 1600);
+
+        // Try opening WhatsApp
+        window.location.href = waUrl;
+      } else {
+        // Desktop / Laptop
+        window.open(waUrl, '_blank');
+      }
+
       showModal(waUrl, false);
     }
 
